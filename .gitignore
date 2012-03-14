@@ -1,0 +1,11 @@
+*.class
+*.log
+
+# maven specific
+target/
+
+#IntelliJ
+.idea/
+.idea_modules/
+*.iml
+

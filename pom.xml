@@ -1,0 +1,125 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.casa.skeleton</groupId>
+    <artifactId>skeleton-java-mvn-web</artifactId>
+    <packaging>jar</packaging>
+    <version>0.1-SNAPSHOT</version>
+    <name>skeleton-java-mvn-web</name>
+
+    <properties>
+        <jettyVersion>7.5.2.v20111006</jettyVersion><!-- latest supporting maven 2 -->
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jettyVersion}</version>
+                <configuration>
+                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <stopKey>foo</stopKey>
+                    <stopPort>9999</stopPort>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.12</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+        	<groupId>org.eclipse.jetty</groupId>
+        	<artifactId>jetty-webapp</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.hamcrest</groupId>
+        	<artifactId>hamcrest-core</artifactId>
+        	<version>1.3.RC2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.hamcrest</groupId>
+        	<artifactId>hamcrest-library</artifactId>
+        	<version>1.3.RC2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+        	<groupId>org.mockito</groupId>
+        	<artifactId>mockito-all</artifactId>
+        	<version>1.9.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.9</version>
+                <configuration>
+                    <reportsDirectories>
+                        <directory>target/surefire-reports</directory>
+                        <directory>target/failsafe-reports</directory>
+                    </reportsDirectories>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+</project>
